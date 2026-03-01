@@ -52,7 +52,23 @@ window.location.href="index.html";
 
 document.getElementById("celular").innerHTML =
 "Config recomendada para: " + detectarCelular();
+let tipo = localStorage.getItem("vipAtivo");
 
+if(tipo === "mensal"){
+
+let expira = localStorage.getItem("vipExpira");
+
+let dias = Math.floor((expira - Date.now()) / (1000 * 60 * 60 * 24));
+
+document.getElementById("tempoVIP").innerText =
+"VIP mensal - dias restantes: " + dias;
+
+}
+
+if(tipo === "vitalicio"){
+document.getElementById("tempoVIP").innerText =
+"VIP vitalício ativo";
+  }
 function salvar(){
 alert("Config salva!");
 }
