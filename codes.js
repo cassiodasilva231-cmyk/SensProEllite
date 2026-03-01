@@ -1,51 +1,99 @@
+// =============================
+// CONFIG
+// =============================
+const ADMIN_SENHA = "123456"; // mude depois
+const PRECO_MENSAL = 9.90;
+const PRECO_VITALICIO = 29.90;
+
+// =============================
+// BANCO LOCAL
+// =============================
 let codigosVIP = JSON.parse(localStorage.getItem("codigosVIP")) || {};
-if(Object.keys(codigosVIP).length === 0){
-codigosVIP = {
-"VIP-T8D0C33B": {
-usado: false,
-expira: Date.now() + (30 * 24 * 60 * 60 * 1000)
-}
-};
-salvarCodigos();
-}
+
 function salvarCodigos(){
 localStorage.setItem("codigosVIP", JSON.stringify(codigosVIP));
 }
 
-function gerarCodigo(){
-
+// =============================
+// GERAR CODIGO
+// =============================
+function gerarCodigo(tipo="mensal"){
 let codigo = "VIP-" + Math.random().toString(36).substr(2,8).toUpperCase();
 
 codigosVIP[codigo] = {
 usado:false,
-expira: Date.now() + (30 * 24 * 60 * 60 * 1000)
+tipo:tipo,
+expira: tipo === "mensal"
+? Date.now() + (30*24*60*60*1000)
+: 9999999999999
 };
 
 salvarCodigos();
-return codigo;
+
+document.getElementById("codigoGerado").innerText = codigo;
 }
 
+// =============================
+// ATIVAR CODIGO
+// =============================
+function ativarCodigo(){
+let codigo = document.getElementById("codigoVIP").value.trim();
+let lista = JSON.parse(localStorage.getItem("codigosVIP")) || {};
+
+if(lista[codigo] && !lista[codigo].usado){
+
+lista[codigo].usado = true;
+localStorage.setItem("codigosVIP", JSON.stringify(lista));
+
+localStorage.setItem("vipAtivo", lista[codigo].tipo);
+
+if(lista[codigo].tipo === "mensal"){
+localStorage.setItem("vipExpira", Date.now() + (30*24*60*60*1000));
+}
+
+alert("VIP ativado com sucesso");
+window.location.href = "vip.html";
+
+}else{
+alert("Código inválido ou usado");
+}
+}
+
+// =============================
+// VERIFICAR VIP
+// =============================
 function verificarVIP(){
- let expira = localStorage.getItem("vipExpira");
- if(!expira) return false;
- return Date.now() < parseInt(expira);
+
+let tipo = localStorage.getItem("vipAtivo");
+let expira = localStorage.getItem("vipExpira");
+
+if(tipo === "vitalicio") return true;
+
+if(tipo === "mensal"){
+if(Date.now() < expira) return true;
 }
 
-
-
-function verificarExpirados(){
-
-for(let c in codigosVIP){
-if(Date.now() > codigosVIP[c].expira){
-delete codigosVIP[c];
-}
+return false;
 }
 
-salvarCodigos();
+// =============================
+// LOGIN ADMIN
+// =============================
+function loginAdmin(){
+
+let senha = document.getElementById("senhaAdmin").value;
+
+if(senha === ADMIN_SENHA){
+document.getElementById("painelAdmin").style.display = "block";
+}else{
+alert("Senha errada");
 }
 
-verificarExpirados();
+}
 
+// =============================
+// DETECTAR CELULAR
+// =============================
 function detectarCelular(){
 
 let ua = navigator.userAgent.toLowerCase();
@@ -56,24 +104,5 @@ if(ua.includes("motorola")) return "Motorola";
 if(ua.includes("iphone")) return "iPhone";
 
 return "Android";
-}
-function ativarCodigo(){
- let codigo = document.getElementById("codigoVIP").value;
 
- let lista = JSON.parse(localStorage.getItem("codigosVIP")) || {};
-
- if(lista[codigo] && !lista[codigo].usado && Date.now() < lista[codigo].expira){
-
-  lista[codigo].usado = true;
-  localStorage.setItem("codigosVIP", JSON.stringify(lista));
-
-  localStorage.setItem("vipAtivo", "mensal");
-  localStorage.setItem("vipExpira", Date.now() + (30 * 24 * 60 * 60 * 1000));
-
-  alert("VIP ativado por 30 dias!");
-  window.location.href = "vip.html";
-
- }else{
-  alert("Código inválido ou já usado");
  }
-}
