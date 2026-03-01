@@ -2,11 +2,12 @@
 <html>
 <head>
 <title>Painel ADM</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="codes.js"></script>
-</head>
 <link rel="stylesheet" href="style.css">
-  <script src="codes.js"></script>
+
+</head>
+
 <body>
 
 <h1>Painel Admin</h1>
@@ -22,6 +23,11 @@
 
 <script>
 
+const supabase = supabase.createClient(
+"https://zrsyfkjmykgkloztgili.supabase.co",
+"COLE_AQUI_SUA_PUBLISHABLE_KEY"
+)
+
 function gerarCodigo(){
 return "VIP-" + Math.random().toString(36).substring(2,8).toUpperCase()
 }
@@ -36,6 +42,7 @@ await supabase
 .insert([{codigo:codigo, tipo:tipo, usado:false}])
 
 document.getElementById("novoCodigo").innerHTML = codigo
+
 }
 
 </script>
