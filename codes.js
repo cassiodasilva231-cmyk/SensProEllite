@@ -1,3 +1,7 @@
+const SUPABASE_URL = "https://zrsyfkjmykgkloztgili.supabase.co";
+const SUPABASE_KEY = "sb_publishable_-p2uZXfW5GlKe6G60xry0A_nfsTKwK5";
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 // =============================
 // CONFIG
 // =============================
@@ -31,32 +35,49 @@ expira: tipo === "mensal"
 salvarCodigos();
 
 document.getElementById("codigoGerado").innerText = codigo;
-}
+async function validarCodigo(codigoDigitado) {
+  const { data, error } = await supabase
+    .from("codigos")
+    .select("*")
+    .eq("codigo", codigoDigitado)
+    .eq("usado", false)
+    .single();
 
+  if (error || !data) {
+    alert("Código inválido ou já usado");
+    return false;
+  }
+
+  // marcar como usado
+  await supabase
+    .from("codigos")
+    .update({ usado: true })
+    .eq("id", data.id);
+
+  // salvar tipo de vip
+  localStorage.setItem("vipAtivo", data.tipo);
+
+  if (data.tipo === "mensal") {
+    const expira = Date.now() + (30 * 24 * 60 * 60 * 1000);
+    localStorage.setItem("vipExpira", expira);
+  } else {
+    localStorage.setItem("vipExpira", "vitalicio");
+  }
+
+  return true;
+}
 // =============================
 // ATIVAR CODIGO
 // =============================
-function ativarCodigo(){
-let codigo = document.getElementById("codigoVIP").value.trim();
-let lista = JSON.parse(localStorage.getItem("codigosVIP")) || {};
+async function ativarCodigo(){
+  let codigoDigitado = document.getElementById("codigoVIP").value.trim();
 
-if(lista[codigo] && !lista[codigo].usado){
+  const valido = await validarCodigo(codigoDigitado);
 
-lista[codigo].usado = true;
-localStorage.setItem("codigosVIP", JSON.stringify(lista));
-
-localStorage.setItem("vipAtivo", lista[codigo].tipo);
-
-if(lista[codigo].tipo === "mensal"){
-localStorage.setItem("vipExpira", Date.now() + (30*24*60*60*1000));
-}
-
-alert("VIP ativado com sucesso");
-window.location.href = "vip.html";
-
-}else{
-alert("Código inválido ou usado");
-}
+  if(valido){
+    alert("VIP ativado com sucesso");
+    window.location.href = "vip.html";
+  }
 }
 
 // =============================
