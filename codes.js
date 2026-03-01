@@ -18,7 +18,9 @@ return codigo;
 }
 
 function verificarVIP(){
-return localStorage.getItem("vipAtivo") === "true";
+ let expira = localStorage.getItem("vipExpira");
+ if(!expira) return false;
+ return Date.now() < parseInt(expira);
 }
 
 function ativarVIP(){
@@ -48,4 +50,24 @@ if(ua.includes("motorola")) return "Motorola";
 if(ua.includes("iphone")) return "iPhone";
 
 return "Android";
+}
+function ativarCodigo(){
+ let codigo = document.getElementById("codigoVIP").value;
+
+ let lista = JSON.parse(localStorage.getItem("codigosVIP")) || {};
+
+ if(lista[codigo] && !lista[codigo].usado){
+
+  lista[codigo].usado = true;
+  localStorage.setItem("codigosVIP", JSON.stringify(lista));
+
+  localStorage.setItem("vipAtivo", "mensal");
+  localStorage.setItem("vipExpira", Date.now() + (30 * 24 * 60 * 60 * 1000));
+
+  alert("VIP ativado por 30 dias!");
+  window.location.href = "vip.html";
+
+ }else{
+  alert("Código inválido ou já usado");
+ }
 }
