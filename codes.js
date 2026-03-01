@@ -1,5 +1,13 @@
 let codigosVIP = JSON.parse(localStorage.getItem("codigosVIP")) || {};
-
+if(Object.keys(codigosVIP).length === 0){
+codigosVIP = {
+"VIP-T8D0C33B": {
+usado: false,
+expira: Date.now() + (30 * 24 * 60 * 60 * 1000)
+}
+};
+salvarCodigos();
+}
 function salvarCodigos(){
 localStorage.setItem("codigosVIP", JSON.stringify(codigosVIP));
 }
