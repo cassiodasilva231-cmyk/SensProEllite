@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sens Pro Elite</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>Sens Pro Elite</h1>
+
+<p id="status"></p>
+
+<h3>Comprar VIP</h3>
+<p>Preço: R$ 9,90</p>
+
+<button onclick="mostrarPix()">Pagar com PIX</button>
+
+<div id="pix" style="display:none;">
+<p>Chave PIX:</p>
+<p class="pix">SUA-CHAVE-PIX-AQUI</p>
+<p>Depois do pagamento você recebe um código.</p>
+</div>
+
+<br>
+
+<h3>Ativar VIP</h3>
+
+<input type="text" id="codigo" placeholder="Digite o código">
+<button onclick="ativarCodigo()">Ativar VIP</button>
+
+</div>
+
+<script src="codes.js"></script>
+
+<script>
+
+if(verificarVIP()){
+document.getElementById("status").innerHTML = "VIP ATIVO";
+setTimeout(()=>{
+window.location.href = "vip.html";
+},1000);
+}else{
+document.getElementById("status").innerHTML = "Modo grátis";
+}
+
+function mostrarPix(){
+document.getElementById("pix").style.display="block";
+}
+
+function ativarCodigo(){
+
+let codigo = document.getElementById("codigo").value;
+
+if(codigosVIP[codigo] && !codigosVIP[codigo].usado){
+
+codigosVIP[codigo].usado = true;
+salvarCodigos();
+ativarVIP();
+
+alert("VIP liberado!");
+window.location.href = "vip.html";
+
+}else{
+alert("Código inválido");
+}
+
+}
+
+</script>
+
+</body>
+</html>
