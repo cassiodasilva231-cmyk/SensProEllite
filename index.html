@@ -1,77 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sens Pro Elite</title>
+<meta charset="UTF-8">
+<title>SensPro Elite</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
+
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1>Sens Pro Elite</h1>
+<h1>SensPro Elite</h1>
 
-<div class="card">
-<h2>Ativar código VIP</h2>
-<input id="codigo" placeholder="Digite seu código">
-<button onclick="ativarCodigo()">Ativar</button>
+<div class="box">
+<input id="nome" placeholder="Seu nome">
+
+<input id="celular" placeholder="Seu celular">
+
+<input id="codigo" placeholder="Código VIP">
+
+<button onclick="ativar()">Ativar</button>
+
 <p id="status"></p>
 </div>
 
-<div class="card">
-<h2>Sensibilidade ideal</h2>
-<button onclick="detectarCelular()">Descobrir sensi</button>
-<p id="sensi"></p>
-</div>
-
-<script>
-
-async function ativarCodigo(){
-
-let codigo = document.getElementById("codigo").value
-
-let { data } = await supabase
-.from("codigos")
-.select("*")
-.eq("codigo", codigo)
-.eq("usado", false)
-
-if(data.length === 0){
-document.getElementById("status").innerText = "Código inválido"
-return
-}
-
-await supabase
-.from("codigos")
-.update({ usado: true })
-.eq("codigo", codigo)
-
-document.getElementById("status").innerText = "VIP ativado!"
-}
-
-function detectarCelular(){
-
-let largura = screen.width
-
-let dpi = window.devicePixelRatio * 160
-
-let sensi
-
-if(dpi > 500){
-sensi = "Alta precisão: 45 - 60"
-}
-else if(dpi > 350){
-sensi = "Balanceada: 60 - 80"
-}
-else{
-sensi = "Alta velocidade: 80 - 100"
-}
-
-document.getElementById("sensi").innerText =
-"Seu DPI aproximado: " + Math.round(dpi) + " | Sensi recomendada: " + sensi
-}
-
-</script>
+<script src="codes.js"></script>
 
 </body>
 </html>
