@@ -1,4 +1,0 @@
-id (int8)
-codigo (text)
-tipo (text)
-usado (boolean)
