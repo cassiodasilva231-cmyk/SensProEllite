@@ -23,9 +23,7 @@ function verificarVIP(){
  return Date.now() < parseInt(expira);
 }
 
-function ativarVIP(){
-localStorage.setItem("vipAtivo","true");
-}
+
 
 function verificarExpirados(){
 
@@ -56,7 +54,7 @@ function ativarCodigo(){
 
  let lista = JSON.parse(localStorage.getItem("codigosVIP")) || {};
 
- if(lista[codigo] && !lista[codigo].usado){
+ if(lista[codigo] && !lista[codigo].usado && Date.now() < lista[codigo].expira){
 
   lista[codigo].usado = true;
   localStorage.setItem("codigosVIP", JSON.stringify(lista));
