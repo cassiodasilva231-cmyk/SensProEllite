@@ -1,4 +1,4 @@
 const SUPABASE_URL = "https://zrsyfkjmykgkloztgili.supabase.co"
-const SUPABASE_KEY = "sb_publishable_-p2uZXfW5GlKe6G60xry0A_nfsTKwK5"
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpyc3lma2pteWtna2xvenRnaWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzU3NDAsImV4cCI6MjA4NzkxMTc0MH0.tonKx1Up9iZIThlN9GhSeuCwF9m9gcb55XbKwTHrg6M"
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
