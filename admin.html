@@ -18,7 +18,10 @@
 <div id="painel" style="display:none;">
 
 <h2>Gerar Código VIP</h2>
-<button onclick="criar()">Gerar</button>
+
+<button onclick="criarMensal()">Gerar VIP Mensal (R$ 9,90)</button>
+<br><br>
+<button onclick="criarVitalicio()">Gerar VIP Vitalício (R$ 29,90)</button>
 
 <p id="codigoGerado"></p>
 
@@ -29,26 +32,25 @@
 <script src="codes.js"></script>
 
 <script>
-
 let senhaAdmin = "admin123";
 
 function entrar(){
-
 let senha = document.getElementById("senha").value;
 
 if(senha === senhaAdmin){
-document.getElementById("painel").style.display="block";
+document.getElementById("painel").style.display = "block";
 }else{
 alert("Senha errada");
 }
-
 }
 
-function criar(){
-let codigo = gerarCodigo();
-document.getElementById("codigoGerado").innerHTML = codigo;
+function criarMensal(){
+gerarCodigo("mensal");
 }
 
+function criarVitalicio(){
+gerarCodigo("vitalicio");
+}
 </script>
 
 </body>
