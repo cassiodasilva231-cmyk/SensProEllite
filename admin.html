@@ -1,105 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Painel Admin</title>
+<meta charset="UTF-8">
+<title>Admin SensPro</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="admin">
+<body>
 
 <h1>Painel Admin</h1>
 
-<div class="card">
+<input type="password" id="senha" placeholder="Senha admin">
+<button onclick="login()">Entrar</button>
+
+<div id="painel" style="display:none">
+
+<h2>Gerar Código</h2>
+
 <select id="tipo">
 <option value="mensal">Mensal</option>
 <option value="vitalicio">Vitalício</option>
 </select>
 
-<button onclick="criarCodigo()">Criar código</button>
+<button onclick="criarCodigo()">Gerar</button>
+
 <p id="novoCodigo"></p>
+
+<h2>Clientes</h2>
+<button onclick="listarClientes()">Atualizar</button>
+
+<div id="clientes"></div>
+
 </div>
 
-<div class="card">
-<h2>Códigos criados</h2>
-<table id="tabela">
-<tr>
-<th>Código</th>
-<th>Tipo</th>
-<th>Status</th>
-<th>Ação</th>
-</tr>
-</table>
-</div>
-
-<script>
-
-function gerarCodigo(){
-return "VIP-" + Math.random().toString(36).substring(2,8).toUpperCase()
-}
-
-async function criarCodigo(){
-let codigo = gerarCodigo()
-let tipo = document.getElementById("tipo").value
-
-await supabase.from("codigos").insert([
-{ codigo: codigo, tipo: tipo, usado: false }
-])
-
-document.getElementById("novoCodigo").innerText = "Código criado: " + codigo
-
-carregarCodigos()
-}
-
-async function carregarCodigos(){
-
-let { data } = await supabase
-.from("codigos")
-.select("*")
-
-let tabela = document.getElementById("tabela")
-
-tabela.innerHTML = `
-<tr>
-<th>Código</th>
-<th>Tipo</th>
-<th>Status</th>
-<th>Ação</th>
-</tr>
-`
-
-data.forEach(c => {
-
-let status = c.usado ? "Usado" : "Ativo"
-
-tabela.innerHTML += `
-<tr>
-<td>${c.codigo}</td>
-<td>${c.tipo}</td>
-<td>${status}</td>
-<td>
-<button onclick="desativar('${c.codigo}')">Desativar</button>
-</td>
-</tr>
-`
-
-})
-}
-
-async function desativar(codigo){
-
-await supabase
-.from("codigos")
-.update({ usado: true })
-.eq("codigo", codigo)
-
-carregarCodigos()
-}
-
-carregarCodigos()
-
-</script>
+<script src="admin.js"></script>
 
 </body>
-  </html>
+</html>
