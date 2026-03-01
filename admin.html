@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Admin SensPro</title>
+
+<title>Painel Admin</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="admin.js"></script>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
 <h1>Painel Admin</h1>
 
-<input type="password" id="senha" placeholder="Senha admin">
+<div id="login">
+
+<input id="senha" placeholder="Senha admin">
 <button onclick="login()">Entrar</button>
+
+</div>
 
 <div id="painel" style="display:none">
 
@@ -29,13 +37,10 @@
 <p id="novoCodigo"></p>
 
 <h2>Clientes</h2>
-<button onclick="listarClientes()">Atualizar</button>
 
-<div id="clientes"></div>
+<div id="lista"></div>
 
 </div>
-
-<script src="admin.js"></script>
 
 </body>
 </html>
