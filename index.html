@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Sens Pro Elite</title>
@@ -31,61 +31,47 @@
 <p>Depois do pagamento você receberá um código VIP.</p>
 </div>
 
-<br>
+<hr>
 
 <h3>Ativar VIP</h3>
+
 <input type="text" id="codigoVIP" placeholder="Digite seu código VIP">
 <button onclick="ativarCodigo()">Ativar</button>
 
 </div>
+
 <script src="codes.js"></script>
 
 <script>
-if (verificarVIP()) {
 
-    let tipo = localStorage.getItem("vipAtivo");
+if(verificarVIP()){
 
-    if (tipo === "mensal") {
-        document.getElementById("status").innerHTML = "VIP MENSAL ATIVO";
-    }
+let tipo = localStorage.getItem("vipAtivo");
 
-    if (tipo === "vitalicio") {
-        document.getElementById("status").innerHTML = "VIP VITALÍCIO ATIVO";
-    }
+if(tipo === "mensal"){
+document.getElementById("status").innerHTML = "VIP MENSAL ATIVO";
+}
 
-    setTimeout(() => {
-        window.location.href = "vip.html";
-    }, 1000);
+if(tipo === "vitalicio"){
+document.getElementById("status").innerHTML = "VIP VITALÍCIO ATIVO";
+}
 
-} else {
-    document.getElementById("status").innerHTML = "Modo grátis";
+setTimeout(()=>{
+window.location.href = "vip.html";
+},1000);
+
+}else{
+document.getElementById("status").innerHTML = "Modo grátis";
 }
 
 function mostrarPix(){
-document.getElementById("pix").style.display="block";
+document.getElementById("pix").style.display = "block";
 }
+
 function copiarPix(){
 let chave = document.getElementById("chavePix").innerText;
 navigator.clipboard.writeText(chave);
 alert("Chave PIX copiada!");
-  }
-function ativarCodigo(){
-
-let codigo = document.getElementById("codigoVIP").value;
-
-if(codigosVIP[codigo] && !codigosVIP[codigo].usado){
-
-codigosVIP[codigo].usado = true;
-salvarCodigos();
-ativarVIP();
-
-alert("VIP liberado!");
-window.location.href = "vip.html";
-
-}else{
-alert("Código inválido");
-}
-
 }
 
 </script>
