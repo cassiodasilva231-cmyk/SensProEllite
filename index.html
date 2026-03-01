@@ -72,7 +72,11 @@ document.getElementById("status").innerHTML = "Modo grátis";
 function mostrarPix(){
 document.getElementById("pix").style.display="block";
 }
-
+function copiarPix(){
+let chave = document.getElementById("chavePix").innerText;
+navigator.clipboard.writeText(chave);
+alert("Chave PIX copiada!");
+  }
 function ativarCodigo(){
 
 let codigo = document.getElementById("codigo").value;
