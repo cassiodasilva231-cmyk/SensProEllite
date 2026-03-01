@@ -15,14 +15,20 @@
 <p id="status"></p>
 
 <h3>Comprar VIP</h3>
-<p>Preço: R$ 9,90</p>
+
+<p>VIP Mensal: R$ 9,90</p>
+<p>VIP Vitalício: R$ 29,90</p>
 
 <button onclick="mostrarPix()">Pagar com PIX</button>
 
 <div id="pix" style="display:none;">
-<p>Chave PIX:</p>
-<p class="pix">d7c981cd-c985-4d9d-bd34-9e738deae48d</p>
-<p>Depois do pagamento você recebe um código.</p>
+<p>Envie o pagamento para esta chave:</p>
+
+<p class="pix" id="chavePix">d7c981cd-c985-4d9d-bd34-9e738deae48d</p>
+
+<button onclick="copiarPix()">Copiar chave PIX</button>
+
+<p>Depois do pagamento você receberá um código VIP.</p>
 </div>
 
 <br>
@@ -35,7 +41,23 @@
 </div>
 
 <script src="codes.js"></script>
+if(verificarVIP()){
 
+let tipo = localStorage.getItem("vipAtivo");
+
+if(tipo === "mensal"){
+document.getElementById("status").innerHTML = "VIP MENSAL ATIVO";
+}
+
+if(tipo === "vitalicio"){
+document.getElementById("status").innerHTML = "VIP VITALÍCIO ATIVO";
+}
+
+setTimeout(()=>{
+window.location.href = "vip.html";
+},1000);
+
+}
 <script>
 
 if(verificarVIP()){
