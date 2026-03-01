@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>Painel Admin</h1>
+
+<input type="password" id="senha" placeholder="Senha admin">
+<button onclick="entrar()">Entrar</button>
+
+<div id="painel" style="display:none;">
+
+<h2>Gerar Código VIP</h2>
+<button onclick="criar()">Gerar</button>
+
+<p id="codigoGerado"></p>
+
+</div>
+
+</div>
+
+<script src="codes.js"></script>
+
+<script>
+
+let senhaAdmin = "admin123";
+
+function entrar(){
+
+let senha = document.getElementById("senha").value;
+
+if(senha === senhaAdmin){
+document.getElementById("painel").style.display="block";
+}else{
+alert("Senha errada");
+}
+
+}
+
+function criar(){
+let codigo = gerarCodigo();
+document.getElementById("codigoGerado").innerHTML = codigo;
+}
+
+</script>
+
+</body>
+</html>
