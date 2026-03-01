@@ -1,56 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Admin</title>
-<link rel="stylesheet" href="style.css">
+<title>Painel ADM</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="codes.js"></script>
 </head>
 
 <body>
 
-<div class="box">
-
 <h1>Painel Admin</h1>
 
-<input type="password" id="senha" placeholder="Senha admin">
-<button onclick="entrar()">Entrar</button>
+<select id="tipo">
+<option value="mensal">Mensal</option>
+<option value="vitalicio">Vitalício</option>
+</select>
 
-<div id="painel" style="display:none;">
+<button onclick="criarCodigo()">Criar código</button>
 
-<h2>Gerar Código VIP</h2>
-
-<button onclick="criarMensal()">Gerar VIP Mensal (R$ 9,90)</button>
-<br><br>
-<button onclick="criarVitalicio()">Gerar VIP Vitalício (R$ 29,90)</button>
-
-<p id="codigoGerado"></p>
-
-</div>
-
-</div>
-
-<script src="codes.js"></script>
+<p id="novoCodigo"></p>
 
 <script>
-let senhaAdmin = "admin123";
 
-function entrar(){
-let senha = document.getElementById("senha").value;
-
-if(senha === senhaAdmin){
-document.getElementById("painel").style.display = "block";
-}else{
-alert("Senha errada");
-}
+function gerarCodigo(){
+return "VIP-" + Math.random().toString(36).substring(2,8).toUpperCase()
 }
 
-function criarMensal(){
-gerarCodigo("mensal");
+async function criarCodigo(){
+
+let codigo = gerarCodigo()
+let tipo = document.getElementById("tipo").value
+
+await supabase
+.from("codigos")
+.insert([{codigo:codigo, tipo:tipo, usado:false}])
+
+document.getElementById("novoCodigo").innerHTML = codigo
 }
 
-function criarVitalicio(){
-gerarCodigo("vitalicio");
-}
 </script>
 
 </body>
