@@ -1,38 +1,35 @@
-const supabase = supabase.createClient(
-"https://zrsyfkjmykgkloztgili.supabase.co",
-"sb_publishable_-p2uZXfW5GlKe6G60xry0A_nfsTKwK5"
-)
+const SENHA_ADMIN = "123456"
 
-const senhaAdmin = "senspro2025"
-
-function login(){
+function login() {
 let senha = document.getElementById("senha").value
 
-if(senha === senhaAdmin){
+if (senha === SENHA_ADMIN) {
+document.getElementById("login").style.display = "none"
 document.getElementById("painel").style.display = "block"
+carregarClientes()
 }
 }
 
-function gerarCodigo(){
+function gerarCodigo() {
 return "VIP-" + Math.random().toString(36).substring(2,8).toUpperCase()
 }
 
-async function criarCodigo(){
+async function criarCodigo() {
 
 let codigo = gerarCodigo()
 let tipo = document.getElementById("tipo").value
 
 await supabase
 .from("codigos")
-.insert([{codigo:codigo, tipo:tipo}])
+.insert([{ codigo: codigo, tipo: tipo, usado:false }])
 
 document.getElementById("novoCodigo").innerText = codigo
 }
 
-async function listarClientes(){
+async function carregarClientes() {
 
-let { data } = await supabase
-.from("clientes")
+const { data } = await supabase
+.from("codigos")
 .select("*")
 
 let html = ""
@@ -40,21 +37,21 @@ let html = ""
 data.forEach(c => {
 html += `
 <div class="cliente">
-${c.nome} - ${c.celular} - ${c.codigo_ativado}
-<button onclick="banir(${c.id})">Banir</button>
+${c.cliente || "—"} | ${c.celular || "—"} | ${c.codigo}
+<button onclick="banir('${c.codigo}')">Banir</button>
 </div>
 `
 })
 
-document.getElementById("clientes").innerHTML = html
+document.getElementById("lista").innerHTML = html
 }
 
-async function banir(id){
+async function banir(codigo) {
 
 await supabase
-.from("clientes")
-.update({banido:true})
-.eq("id", id)
+.from("codigos")
+.delete()
+.eq("codigo", codigo)
 
-listarClientes()
-}
+carregarClientes()
+  }
