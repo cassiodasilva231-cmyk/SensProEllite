@@ -1,68 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sens Pro Elite</title>
 <link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="codes.js"></script>
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
 <h1>Sens Pro Elite</h1>
-
 <p id="status"></p>
 
-<h3>Comprar VIP</h3>
+<div class="card">
+<h2>Comprar VIP</h2>
 
 <p>VIP Mensal: R$ 9,90</p>
 <p>VIP Vitalício: R$ 29,90</p>
 
 <button onclick="mostrarPix()">Pagar com PIX</button>
 
-<div id="pix" style="display:none;">
-<p>Envie o pagamento para esta chave:</p>
-
-<p class="pix" id="chavePix">d7c981cd-c985-4d9d-bd34-9e738deae48d</p>
+<div id="pix" class="pixBox">
+<p>Envie o pagamento para:</p>
+<p class="pix" id="chavePix">SUA_CHAVE_PIX_AQUI</p>
 
 <button onclick="copiarPix()">Copiar chave PIX</button>
-
-<p>Depois do pagamento você receberá um código VIP.</p>
+<p>Após pagar você recebe um código VIP</p>
+</div>
 </div>
 
-<hr>
+<div class="card">
+<h2>Ativar VIP</h2>
 
-<h3>Ativar VIP</h3>
-
-<input type="text" id="codigoVIP" placeholder="Digite seu código VIP">
-<button onclick="ativarCodigo()">Ativar</button>
+<input type="text" id="codigoVIP" placeholder="Digite seu código">
+<button onclick="entrarVIP()">Ativar</button>
 
 </div>
 
-<script src="codes.js"></script>
+<div class="card">
+<h2>Sensi Ideal para seu celular</h2>
+<p id="celular"></p>
+<button onclick="detectarCelular()">Detectar Sensi</button>
+<div id="sensi"></div>
+</div>
+
+</div>
 
 <script>
-
-if(verificarVIP()){
-
-let tipo = localStorage.getItem("vipAtivo");
-
-if(tipo === "mensal"){
-document.getElementById("status").innerHTML = "VIP MENSAL ATIVO";
-}
-
-if(tipo === "vitalicio"){
-document.getElementById("status").innerHTML = "VIP VITALÍCIO ATIVO";
-}
-
-setTimeout(()=>{
-window.location.href = "vip.html";
-},1000);
-
-}else{
-document.getElementById("status").innerHTML = "Modo grátis";
-}
 
 function mostrarPix(){
 document.getElementById("pix").style.display = "block";
@@ -71,10 +60,49 @@ document.getElementById("pix").style.display = "block";
 function copiarPix(){
 let chave = document.getElementById("chavePix").innerText;
 navigator.clipboard.writeText(chave);
-alert("Chave PIX copiada!");
+alert("PIX copiado");
+}
+
+function detectarCelular(){
+let userAgent = navigator.userAgent;
+
+document.getElementById("celular").innerHTML = userAgent;
+
+let sensi = {
+geral: 95,
+redDot: 90,
+x2: 85,
+x4: 75,
+awp: 50,
+dpi: 480
+};
+
+if(userAgent.includes("Samsung")){
+sensi.dpi = 600;
+sensi.geral = 100;
+}
+
+if(userAgent.includes("Xiaomi")){
+sensi.dpi = 520;
+sensi.geral = 96;
+}
+
+if(userAgent.includes("iPhone")){
+sensi.dpi = 450;
+sensi.geral = 92;
+}
+
+document.getElementById("sensi").innerHTML = `
+DPI: ${sensi.dpi}<br>
+Geral: ${sensi.geral}<br>
+Red Dot: ${sensi.redDot}<br>
+2x: ${sensi.x2}<br>
+4x: ${sensi.x4}<br>
+AWP: ${sensi.awp}
+`;
 }
 
 </script>
 
 </body>
-</html>
+  </html>
