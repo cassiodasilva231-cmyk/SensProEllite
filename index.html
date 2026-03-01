@@ -38,34 +38,27 @@
 <button onclick="ativarCodigo()">Ativar</button>
 
 </div>
-
 <script src="codes.js"></script>
-if(verificarVIP()){
 
-let tipo = localStorage.getItem("vipAtivo");
-
-if(tipo === "mensal"){
-document.getElementById("status").innerHTML = "VIP MENSAL ATIVO";
-}
-
-if(tipo === "vitalicio"){
-document.getElementById("status").innerHTML = "VIP VITALÍCIO ATIVO";
-}
-
-setTimeout(()=>{
-window.location.href = "vip.html";
-},1000);
-
-}
 <script>
+if (verificarVIP()) {
 
-if(verificarVIP()){
-document.getElementById("status").innerHTML = "VIP ATIVO";
-setTimeout(()=>{
-window.location.href = "vip.html";
-},1000);
-}else{
-document.getElementById("status").innerHTML = "Modo grátis";
+    let tipo = localStorage.getItem("vipAtivo");
+
+    if (tipo === "mensal") {
+        document.getElementById("status").innerHTML = "VIP MENSAL ATIVO";
+    }
+
+    if (tipo === "vitalicio") {
+        document.getElementById("status").innerHTML = "VIP VITALÍCIO ATIVO";
+    }
+
+    setTimeout(() => {
+        window.location.href = "vip.html";
+    }, 1000);
+
+} else {
+    document.getElementById("status").innerHTML = "Modo grátis";
 }
 
 function mostrarPix(){
