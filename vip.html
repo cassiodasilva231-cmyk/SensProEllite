@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Área VIP</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>Área VIP</h1>
+
+<p id="celular"></p>
+
+<h3>DPI</h3>
+<input type="number" id="dpi" max="2000">
+
+<h3>Sensibilidade Geral</h3>
+<input type="number" max="200">
+
+<h3>Ponto vermelho</h3>
+<input type="number" max="200">
+
+<h3>Mira 2x</h3>
+<input type="number" max="200">
+
+<h3>Mira 4x</h3>
+<input type="number" max="200">
+
+<h3>AWM</h3>
+<input type="number" max="200">
+
+<h3>Olhadinha</h3>
+<input type="number" max="200">
+
+<br><br>
+
+<button onclick="salvar()">Salvar Config</button>
+
+</div>
+
+<script src="codes.js"></script>
+
+<script>
+
+if(!verificarVIP()){
+alert("Você não é VIP");
+window.location.href="index.html";
+}
+
+document.getElementById("celular").innerHTML =
+"Config recomendada para: " + detectarCelular();
+
+function salvar(){
+alert("Config salva!");
+}
+
+</script>
+
+</body>
+  </html>
