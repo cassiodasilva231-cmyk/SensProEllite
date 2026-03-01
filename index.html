@@ -5,6 +5,8 @@
 <title>SensPro Elite</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -13,19 +15,27 @@
 
 <h1>SensPro Elite</h1>
 
-<div class="box">
+<div class="card">
+
 <input id="nome" placeholder="Seu nome">
-
 <input id="celular" placeholder="Seu celular">
-
 <input id="codigo" placeholder="Código VIP">
 
-<button onclick="ativar()">Ativar</button>
+<button onclick="ativar()">Ativar Sens Ideal</button>
 
 <p id="status"></p>
+
 </div>
 
-<script src="codes.js"></script>
+<div class="card">
+<h2>Pagamento PIX</h2>
+
+<p>Pague e receba o código VIP</p>
+
+<p>Chave PIX:</p>
+<b>d7c981cd-c985-4d9d-bd34-9e738deae48d</b>
+
+</div>
 
 </body>
 </html>
