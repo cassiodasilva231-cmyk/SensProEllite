@@ -1,46 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<title>Painel Admin</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script src="admin.js"></script>
-
+<title>Admin - Sensipro Elite</title>
 <link rel="stylesheet" href="style.css">
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 
 <body>
 
-<h1>Painel Admin</h1>
+<div class="container">
 
-<div id="login">
+<h1>Admin</h1>
 
 <input id="senha" placeholder="Senha admin">
 <button onclick="login()">Entrar</button>
 
-</div>
-
 <div id="painel" style="display:none">
 
 <h2>Gerar Código</h2>
+<button onclick="gerarCodigo()">Gerar</button>
 
-<select id="tipo">
-<option value="mensal">Mensal</option>
-<option value="vitalicio">Vitalício</option>
-</select>
-
-<button onclick="criarCodigo()">Gerar</button>
-
-<p id="novoCodigo"></p>
-
-<h2>Clientes</h2>
-
-<div id="lista"></div>
+<p id="codigoGerado"></p>
 
 </div>
+
+</div>
+
+<script src="config.js"></script>
+
+<script>
+
+function login(){
+const senha = document.getElementById("senha").value;
+
+if(senha === "123456"){
+document.getElementById("painel").style.display = "block";
+}
+}
+
+async function gerarCodigo(){
+
+const codigo = "SENSI-" + Math.random().toString(36).substring(2,8).toUpperCase();
+
+await supabaseClient
+.from("codigos")
+.insert({
+codigo: codigo,
+tipo: "vip"
+});
+
+document.getElementById("codigoGerado").innerText = codigo;
+}
+
+</script>
 
 </body>
 </html>
