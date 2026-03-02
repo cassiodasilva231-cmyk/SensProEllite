@@ -1,46 +1,33 @@
-function detectarDPI() {
-let largura = window.screen.width
+async function ativarCodigo() {
 
-if (largura <= 720) return 300
-if (largura <= 1080) return 400
-if (largura <= 1440) return 500
-return 600
-}
+const codigo = document.getElementById("codigo").value;
+const nome = document.getElementById("nome").value;
+const celular = document.getElementById("celular").value;
 
-async function ativar() {
-
-let codigo = document.getElementById("codigo").value
-let nome = document.getElementById("nome").value
-let celular = document.getElementById("celular").value
-
-const { data, error } = await supabase
+const { data, error } = await supabaseClient
 .from("codigos")
 .select("*")
 .eq("codigo", codigo)
-.single()
+.single();
 
-if (!data) {
-document.getElementById("status").innerText = "Código inválido"
-return
+if(error || !data){
+document.getElementById("resultado").innerText = "Código inválido";
+return;
 }
 
-if (data.usado) {
-document.getElementById("status").innerText = "Código já usado"
-return
+if(data.usado){
+document.getElementById("resultado").innerText = "Código já usado";
+return;
 }
 
-let dpi = detectarDPI()
-
-await supabase
+await supabaseClient
 .from("codigos")
 .update({
 usado: true,
 cliente: nome,
-celular: celular,
-dpi: dpi
+celular: celular
 })
-.eq("codigo", codigo)
+.eq("codigo", codigo);
 
-document.getElementById("status").innerText =
-"Sens ativada! DPI ideal: " + dpi
+document.getElementById("resultado").innerText = "Código ativado com sucesso";
 }
