@@ -35,6 +35,8 @@ const senha = document.getElementById("senha").value;
 
 if(senha === "123456"){
 document.getElementById("painel").style.display = "block";
+}else{
+alert("Senha errada");
 }
 }
 
@@ -42,14 +44,23 @@ async function gerarCodigo(){
 
 const codigo = "SENSI-" + Math.random().toString(36).substring(2,8).toUpperCase();
 
-await supabaseClient
+const { data, error } = await supabaseClient
 .from("codigos")
-.insert({
+.insert([
+{
 codigo: codigo,
-tipo: "vip"
-});
+tipo: "vip",
+usado: false
+}
+]);
 
-document.getElementById("codigoGerado").innerText = codigo;
+if(error){
+alert("Erro: " + error.message);
+return;
+}
+
+document.getElementById("codigoGerado").innerText = "Código criado: " + codigo;
+
 }
 
 </script>
