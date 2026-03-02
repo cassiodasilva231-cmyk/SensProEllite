@@ -1,41 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>SensPro Elite</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script src="app.js"></script>
-
+<title>Sensipro Elite</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 
 <body>
 
-<h1>SensPro Elite</h1>
+<div class="container">
 
-<div class="card">
-
-<input id="nome" placeholder="Seu nome">
-<input id="celular" placeholder="Seu celular">
-<input id="codigo" placeholder="Código VIP">
-
-<button onclick="ativar()">Ativar Sens Ideal</button>
-
-<p id="status"></p>
-
-</div>
+<h1>Sensipro Elite</h1>
 
 <div class="card">
 <h2>Pagamento PIX</h2>
+<p>Faça o pagamento e receba seu código.</p>
 
-<p>Pague e receba o código VIP</p>
+<div class="pix">
+Chave PIX:<br>
+<b>025.984.620-17</b>
+</div>
+</div>
 
-<p>Chave PIX:</p>
-<b>d7c981cd-c985-4d9d-bd34-9e738deae48d</b>
+<div class="card">
+<h2>Ativar Código</h2>
+
+<input id="codigo" placeholder="Digite seu código">
+<input id="nome" placeholder="Seu nome">
+<input id="celular" placeholder="Celular">
+
+<button onclick="ativarCodigo()">Ativar</button>
+
+<p id="resultado"></p>
 
 </div>
+
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
